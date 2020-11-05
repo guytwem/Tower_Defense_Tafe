@@ -6,7 +6,6 @@ using TowerDefence.Enemies;
 
 namespace TowerDefence
 {
-
     public class Player : MonoBehaviour
     {
         public static Player instance = null;
