@@ -181,11 +181,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cf57b775f74f20458418a379f00c3c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemies: []
+  instance: {fileID: 322712520}
+  enemies:
+  - {fileID: 0}
+  enemy: {fileID: 5192673397802033664, guid: 1736307ed7fb90e479c338e0dacde8f5, type: 3}
   enemySpawnRate: 1
   endWaveWaitTime: 20
   waveIndex: 0
   wave1: 5
+  xPos: 0
+  zPos: 0
+  enemyCount: 0
 --- !u!4 &322712521
 Transform:
   m_ObjectHideFlags: 0
@@ -212,8 +218,9 @@ GameObject:
   - component: {fileID: 556301510}
   - component: {fileID: 556301509}
   - component: {fileID: 556301508}
+  - component: {fileID: 556301512}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Player Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -293,6 +300,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &556301512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 556301507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f03e914b92c9ec4aa11ada39d2867b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerBase: {fileID: 556301507}
+  health: 100
+  money: 100
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0

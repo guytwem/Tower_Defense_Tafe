@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TowerDefence.Towers;
-using TowerDefence.Enemies;
 
-namespace TowerDefence
-{
+
+
+
     public class Player : MonoBehaviour
     {
         public static Player instance = null;
+
+    public GameObject playerBase;
+
+    public float health = 100;
 
         [SerializeField]
         private int money = 100;//money player starts with
@@ -37,4 +41,4 @@ namespace TowerDefence
             DontDestroyOnLoad(gameObject);
         }
     }
-}
+
