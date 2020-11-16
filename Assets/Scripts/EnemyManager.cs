@@ -9,7 +9,7 @@ public class EnemyManager : MonoBehaviour
 {
     public EnemyManager instance;
 
-    public List<Enemy> enemies = new List<Enemy>();
+    public List<GameObject> enemies = new List<GameObject>();
 
     public GameObject enemy;
 
@@ -48,7 +48,6 @@ public class EnemyManager : MonoBehaviour
 
     #endregion
 
-
     private void Awake()
     {
         if (instance == null)
@@ -63,28 +62,73 @@ public class EnemyManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-
-
-    // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(EnemyDrop());
 
     }
 
-   IEnumerator EnemyDrop() // spawns enemies up to ten in a random area
+    IEnumerator EnemyDrop() // spawns enemies up to ten in a random area
     {
         while(enemyCount < 10)
         {
-            xPos = Random.Range(-21, 14);
-            zPos = Random.Range(-11, 13);
-            Instantiate(enemy, new Vector3(xPos, 0, zPos), Quaternion.identity);
+            //xPos = Random.Range(-21, 14);
+            //zPos = Random.Range(-11, 13);
+
+            Vector3 newSpawnLocation = SpawnLocation(xPos, zPos);
+
+            //GameObject newEnemy = Instantiate(enemy, new Vector3(xPos, 0, zPos), Quaternion.identity);
+            GameObject newEnemy = Instantiate(enemy, newSpawnLocation, Quaternion.identity);
+            //enemies.Add(newEnemy);
+            //Debug.Log(enemies.Count);
             yield return new WaitForSeconds(5f);
             enemyCount += 1;
         }
     }
 
-   
+    /// <summary>
+    /// finds random x, random z, changes signs if nessesary, and returns Vector3
+    /// </summary>
+    /// <returns></returns>
+    private Vector3 SpawnLocation(float _xPosition, float _zPosition)
+    {
+        // which value to set first
+        int firstValueSet = Random.Range(0, 2);
+        if (firstValueSet == 0)
+        {
+            // set x position first
+            _xPosition = Random.Range(18, 21);
+            _zPosition = Random.Range(-11, 13);
+        }
+        else
+        {
+            // set x position first
+            _zPosition = Random.Range(10, 13);
+            _xPosition = Random.Range(-21, 14);
+        }
+
+        // which values to change
+        int signConfig = Random.Range(0, 3);
+        if (signConfig == 0)
+        {
+            // change both sign values
+            _xPosition = -_xPosition;
+            _zPosition = -_zPosition;
+        }
+        else if (signConfig == 1)
+        {
+            // change x sign value
+            _xPosition = -_xPosition;
+        }
+        else if (signConfig == 2)
+        {
+            // change x sign value
+            _zPosition = -_zPosition;
+        }
+        // else keep signs
+
+        return new Vector3(_xPosition, 0, _zPosition);
+    }
 
 }
 

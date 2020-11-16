@@ -10,9 +10,9 @@ using TowerDefence.Towers;
     {
         public static Player instance = null;
 
-    public GameObject playerBase;
+        public GameObject playerBase;
 
-    public float health = 100;
+        public float health = 100;
 
         [SerializeField]
         private int money = 100;//money player starts with
