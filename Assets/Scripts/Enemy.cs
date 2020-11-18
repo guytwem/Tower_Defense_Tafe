@@ -17,31 +17,40 @@ public class Enemy : MonoBehaviour
     private float damage = 1;
     [SerializeField, Tooltip("Distance before the enemy starts attacking")]
     private float minAttackDistance = 1;
-    [SerializeField]
-    private float attackDamage = 1;
+
+    public GameObject enemy;
 
     [Header("Rewards")]
     [SerializeField]
     private int money = 1;
 
-    Player player;
-    EnemyManager enemyManager;
+    public Player player; //reference to player script
+     
 
 
 
-    public enum State { Move, Attack }
+    public enum State { Move, Attack } // State Machine
 
-    public State state;
+    public State state; // reference to the state machine
 
-    
+    private void Start()
+    {
 
+        NextState();//starts the state machine
+        player = Player.instance;
+    }
+
+    /// <summary>
+    /// Move State that moves enemy to base
+    /// </summary>
+    /// <returns>Attack state if distance is less than attack distance</returns>
     private IEnumerator MoveState()
     {
         while (state == State.Move)
         {
             Move();
             yield return null;
-            if (Vector2.Distance(enemyManager.enemy.transform.position, player.playerBase.transform.position) < minAttackDistance)
+            if (Vector2.Distance(enemy.transform.position, player.playerBase.transform.position) <= minAttackDistance)
             {
                 state = State.Attack;
             }
@@ -49,6 +58,10 @@ public class Enemy : MonoBehaviour
         NextState();
     }
 
+    /// <summary>
+    /// Attack state that reduces player health
+    /// </summary>
+    /// <returns>if player health is 0 then game over</returns>
     private IEnumerator AttackState()
     {
         while (state == State.Attack)
@@ -57,17 +70,24 @@ public class Enemy : MonoBehaviour
             yield return null;
             if (player.health == 0)
             {
-                //Game Over
+                Time.timeScale = 0;
             }
         }
         NextState();
     }
 
+    /// <summary>
+    /// reduced player health * Time.deltatime
+    /// </summary>
     public void Attack()
     {
-        player.health -= attackDamage * Time.deltaTime;
+        player.health -= damage * Time.deltaTime;
     }
 
+    /// <summary>
+    /// Damage the tower does to the enemy
+    /// </summary>
+    /// <param name="_tower">what tower is attacking</param>
     public void Damage(Tower _tower)
     {
         //loses health based on tower damage
@@ -83,23 +103,22 @@ public class Enemy : MonoBehaviour
         player.AddMoney(money);//on death add money to player
     }
 
-    private void Start()
+   
+    /// <summary>
+    /// Moves the enemy to the player base as long as the player base still has health
+    /// </summary>
+    public void Move()
     {
-        player = Player.instance;
-        NextState();
+
+      enemy.transform.position = Vector3.MoveTowards
+        (enemy.transform.position, player.playerBase.transform.position, speed * Time.deltaTime);
+
     }
 
-    private void Move()
-    {
-        if(player.health > 0)
-        {
-            enemyManager.enemy.transform.position = Vector3.MoveTowards
-            (enemyManager.enemy.transform.position, player.playerBase.transform.position, speed * Time.deltaTime);
-        }
-        
-    }
-
-    private void NextState()
+    /// <summary>
+    /// switches to the next state
+    /// </summary>
+    public void NextState()
     {
         string methodName = state.ToString() + "State";
         System.Reflection.MethodInfo info =

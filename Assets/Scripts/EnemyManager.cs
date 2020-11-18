@@ -13,6 +13,8 @@ public class EnemyManager : MonoBehaviour
 
     public GameObject enemy;
 
+   
+
     #region Private Wave Variables
 
     [Header("Wave Variables")]
@@ -66,6 +68,15 @@ public class EnemyManager : MonoBehaviour
     {
         StartCoroutine(EnemyDrop());
 
+
+    }
+
+    private void Update()
+    {
+        /*if (enemy == null)
+        {
+            enemy = GameObject.FindWithTag("Enemy");
+        }*/
     }
 
     IEnumerator EnemyDrop() // spawns enemies up to ten in a random area
@@ -79,6 +90,7 @@ public class EnemyManager : MonoBehaviour
 
             //GameObject newEnemy = Instantiate(enemy, new Vector3(xPos, 0, zPos), Quaternion.identity);
             GameObject newEnemy = Instantiate(enemy, newSpawnLocation, Quaternion.identity);
+            //newEnemy.GetComponent<Enemy>().enemy = enemy;
             //enemies.Add(newEnemy);
             //Debug.Log(enemies.Count);
             yield return new WaitForSeconds(5f);
