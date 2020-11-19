@@ -12,10 +12,10 @@ using TowerDefence.Towers;
 
         public GameObject playerBase;
 
-        public float health = 100;
+        public float health = Mathf.Clamp(100, 0, 100);
 
         [SerializeField]
-        private int money = 100;//money player starts with
+        public int money = 100;//money player starts with
 
         public void AddMoney(int _money)
         {

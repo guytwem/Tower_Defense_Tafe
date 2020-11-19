@@ -4,7 +4,7 @@ using UnityEngine;
 using TowerDefence.Towers;
 
 
-
+public enum State { Move, Attack } // State Machine
 
 public class Enemy : MonoBehaviour
 {
@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour
     [SerializeField, Tooltip("How much damage the enemy will do to the players health")]
     private float damage = 1;
     [SerializeField, Tooltip("Distance before the enemy starts attacking")]
-    private float minAttackDistance = 1;
+    private float minAttackDistance = 0.2f;
 
     public GameObject enemy;
 
@@ -24,20 +24,16 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private int money = 1;
 
-    public Player player; //reference to player script
-     
+    private Player player; //reference to player script
 
-
-
-    public enum State { Move, Attack } // State Machine
 
     public State state; // reference to the state machine
 
     private void Start()
     {
-
-        NextState();//starts the state machine
         player = Player.instance;
+        NextState();//starts the state machine
+
     }
 
     /// <summary>
@@ -46,6 +42,7 @@ public class Enemy : MonoBehaviour
     /// <returns>Attack state if distance is less than attack distance</returns>
     private IEnumerator MoveState()
     {
+        
         while (state == State.Move)
         {
             Move();
@@ -109,9 +106,8 @@ public class Enemy : MonoBehaviour
     /// </summary>
     public void Move()
     {
-
-      enemy.transform.position = Vector3.MoveTowards
-        (enemy.transform.position, player.playerBase.transform.position, speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position,
+                             player.playerBase.transform.position, speed * Time.deltaTime);
 
     }
 

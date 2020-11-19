@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-
-
 public class EnemyManager : MonoBehaviour
 {
     public EnemyManager instance;
 
-    public List<GameObject> enemies = new List<GameObject>();
+    public List<Enemy> enemies = new List<Enemy>();
 
     public GameObject enemy;
+
+    public Enemy enemyScript;
 
    
 
@@ -67,12 +67,16 @@ public class EnemyManager : MonoBehaviour
     void Start()
     {
         StartCoroutine(EnemyDrop());
-
+        
 
     }
 
     private void Update()
     {
+        //foreach (GameObject enemy in enemies)
+        //{
+         //   enemyScript.NextState();
+        //}
         /*if (enemy == null)
         {
             enemy = GameObject.FindWithTag("Enemy");
@@ -90,8 +94,9 @@ public class EnemyManager : MonoBehaviour
 
             //GameObject newEnemy = Instantiate(enemy, new Vector3(xPos, 0, zPos), Quaternion.identity);
             GameObject newEnemy = Instantiate(enemy, newSpawnLocation, Quaternion.identity);
+            Enemy enemyRef = newEnemy.GetComponent<Enemy>();
             //newEnemy.GetComponent<Enemy>().enemy = enemy;
-            //enemies.Add(newEnemy);
+            enemies.Add(enemyRef);
             //Debug.Log(enemies.Count);
             yield return new WaitForSeconds(5f);
             enemyCount += 1;

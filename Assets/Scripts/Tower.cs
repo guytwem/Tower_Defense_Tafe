@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace TowerDefence.Towers
 {
-    public abstract class Tower : MonoBehaviour
+    public class Tower : MonoBehaviour
     {
         #region tower properties
         public string TowerName { get => towerName; } // accessor for towerName Variable
@@ -28,7 +28,7 @@ namespace TowerDefence.Towers
         [SerializeField, TextArea]
         private string description = "";
         [SerializeField, Range(1, 10)]
-        private int cost = 1;
+        public static int cost = 1;
 
         [Header("Tower Stats")]
         [SerializeField, Min(0.1f)]
