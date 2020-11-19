@@ -8,19 +8,15 @@ namespace TowerDefence.Managers
     public class TowerManager : MonoBehaviour
     {
         public static TowerManager instance;
-
-        public GameObject towerPrefab;
-
         Player player;
 
-        private int groundLayerMask;
+        public GameObject towerPrefab;
+        [SerializeField] private Transform worldSpacePointer;
 
         private int cost = 1;
-
-        Tower tower = null;
+        private int groundLayerMask;
 
         public List<Tower> towerList = new List<Tower>();
-
         private Vector3 towerPlacement = new Vector3(0, 0, 0);
 
 
@@ -46,12 +42,10 @@ namespace TowerDefence.Managers
 
         private void Update()
         {
-            FindTowerSpawn();
-            Debug.Log(towerPlacement);
+            FindNewTowerSpawn();
         }
 
-
-        private void FindTowerSpawn()
+        private void FindNewTowerSpawn()
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -61,30 +55,35 @@ namespace TowerDefence.Managers
 
                 RaycastHit hit;
 
-
                 if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity, groundLayerMask))
                 {
-                    Vector3 newTowerPosition = hit.point;
-                    towerPlacement = newTowerPosition;
+                    //Vector3 newTowerPosition = hit.point;
+                    //towerPlacement = newTowerPosition;
+
+                    worldSpacePointer.position = hit.point;
+                    towerPlacement = worldSpacePointer.position;
+                    worldSpacePointer.gameObject.SetActive(true);
                 }
-                
             }
-            
+        }
+
+        public void PurchaseTower()
+        {
+            if (player.money >= cost)
+            {
+                GameObject newTower = Instantiate(towerPrefab, towerPlacement, Quaternion.identity, transform);
+                Tower newTow = newTower.GetComponent<Tower>();
+                towerList.Add(newTow);
+                worldSpacePointer.gameObject.SetActive(false);
+            }
         }
 
         private void OnGUI()
         {
             if (GUI.Button(new Rect(0, 0, 200, 40), towerPlacement.ToString()))
             {
-                if(player.money >= cost)
-                {
-
-                    GameObject newTower = Instantiate(towerPrefab, towerPlacement, Quaternion.identity, transform);
-                    Tower newTow = newTower.GetComponent<Tower>(); 
-                    towerList.Add(newTow);
-                }
+                PurchaseTower();
             }
-            
         }
     }
 }

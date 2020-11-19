@@ -109,8 +109,7 @@ MonoBehaviour:
   speed: 1
   health: 100
   damage: 1
-  minAttackDistance: 3
-  enemy: {fileID: 5192673397802033664}
+  minAttackDistance: 1.01
+  enemy: {fileID: 0}
   money: 1
-  player: {fileID: 0}
   state: 0

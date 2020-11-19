@@ -33,7 +33,6 @@ public class Enemy : MonoBehaviour
     {
         player = Player.instance;
         NextState();//starts the state machine
-
     }
 
     /// <summary>
@@ -47,7 +46,8 @@ public class Enemy : MonoBehaviour
         {
             Move();
             yield return null;
-            if (Vector2.Distance(enemy.transform.position, player.playerBase.transform.position) <= minAttackDistance)
+            float distance = Vector2.Distance(transform.position, player.playerBase.transform.position);
+            if (distance <= minAttackDistance)
             {
                 state = State.Attack;
             }
@@ -107,7 +107,7 @@ public class Enemy : MonoBehaviour
     public void Move()
     {
         transform.position = Vector3.MoveTowards(transform.position,
-                             player.playerBase.transform.position, speed * Time.deltaTime);
+                             player.playerBase.transform.position, speed * 10f * Time.deltaTime);
 
     }
 
