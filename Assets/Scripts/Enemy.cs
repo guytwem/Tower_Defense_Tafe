@@ -85,17 +85,17 @@ public class Enemy : MonoBehaviour
     /// Damage the tower does to the enemy
     /// </summary>
     /// <param name="_tower">what tower is attacking</param>
-    public void Damage(Tower _tower)
+    public void Damage(float damage)
     {
         //loses health based on tower damage
-        health -= _tower.Damage;
+        health -= damage;
         if (health <= 0)//if health reaches 0 then the enemy dies
         {
-            Die(_tower);
+            Die();
         }
     }
 
-    private void Die(Tower _tower)
+    private void Die()//Tower _tower)
     {
         player.AddMoney(money);//on death add money to player
     }

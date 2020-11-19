@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    public EnemyManager instance;
+    public static EnemyManager instance;
 
     public List<Enemy> enemies = new List<Enemy>();
 
@@ -73,14 +73,23 @@ public class EnemyManager : MonoBehaviour
 
     private void Update()
     {
-        //foreach (GameObject enemy in enemies)
-        //{
-         //   enemyScript.NextState();
-        //}
-        /*if (enemy == null)
+
+    }
+
+    public Enemy[] EnemiesInRange(Transform target, float maxRange, float minRange = 0)
+    {
+        List<Enemy> enemiesInRange = new List<Enemy>();
+
+        foreach (Enemy enemy in enemies)
         {
-            enemy = GameObject.FindWithTag("Enemy");
-        }*/
+            float distance = Vector3.Distance(enemy.transform.position, target.position);
+            if (distance < maxRange && distance > minRange)
+            {
+                enemiesInRange.Add(enemy);
+            }
+        }
+
+        return enemiesInRange.ToArray();
     }
 
     IEnumerator EnemyDrop() // spawns enemies up to ten in a random area

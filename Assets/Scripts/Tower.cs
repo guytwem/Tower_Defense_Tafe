@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace TowerDefence.Towers
 {
-    public class Tower : MonoBehaviour
+    public abstract class Tower : MonoBehaviour
     {
         #region tower properties
         public string TowerName { get => towerName; } // accessor for towerName Variable
@@ -46,6 +46,66 @@ namespace TowerDefence.Towers
 
         private Enemy target = null;
 
+        private void Target()
+        {
+            Enemy[] closeEnemies = EnemyManager.instance.EnemiesInRange(transform, MaximumRange, minimumRange);
+
+            target = GetClosestEnemy(closeEnemies);
+
+        }
+
+        private Enemy GetClosestEnemy(Enemy[] enemies)
+        {
+            float closestDistance = float.MaxValue;
+            Enemy closest = null;
+
+            foreach (Enemy enemy in enemies)
+            {
+                float distanceToEnemy = Vector3.Distance(enemy.transform.position, transform.position);
+                if (distanceToEnemy < closestDistance)
+                {
+                    closestDistance = distanceToEnemy;
+                    closest = enemy;
+                }
+            }
+
+            return closest;
+        }
+
+        private void Fire()
+        {
+            if (target != null)
+            {
+                target.Damage(Damage);
+
+                RenderAttackVisuals();
+            }
+        }
+
+        private void FireWhenReady()
+        {
+            if (target != null)
+            {
+                if (currentTime < fireRate)
+                {
+                    currentTime += Time.deltaTime;
+                }
+                else
+                {
+                    currentTime = 0;
+                    Fire();
+                }
+            }
+        }
+
+        protected abstract void RenderAttackVisuals();
+
+        protected virtual void Update()
+        {
+            Target();
+            FireWhenReady();
+        }
+
         private void OnDrawGizmosSelected()
         {
             // Draw a mostly transparent red sphere indicating the minimum range
@@ -58,7 +118,5 @@ namespace TowerDefence.Towers
             Gizmos.color = new Color(0, 0, 1, 0.25f);
             Gizmos.DrawSphere(transform.position, MaximumRange);
         }
-
-
     }
 }
