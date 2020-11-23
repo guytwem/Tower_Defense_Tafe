@@ -12,7 +12,7 @@ public class MainMenuScript : MonoBehaviour
     private Toggle fullscreenToggle;
     [SerializeField, Tooltip("Game Quailty Dropdown")]
     private Dropdown qualityDropdown;
-    [SerializeField, Tooltip("")]
+    [SerializeField, Tooltip("Resolution configurations dropdown")]
     private Dropdown resolution;
     private Resolution[] resolutions;
 
@@ -148,6 +148,5 @@ public class MainMenuScript : MonoBehaviour
         resolution.value = currentResolutionIndex;
         resolution.RefreshShownValue();
     }
-
 
 }

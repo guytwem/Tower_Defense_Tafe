@@ -78,6 +78,13 @@ namespace TowerDefence.Managers
             if (player.money >= cost)
             {
                 GameObject newTower = Instantiate(towerPrefab, towerPlacement, Quaternion.identity, transform);
+
+                Vector3 towerRotation = newTower.transform.localEulerAngles;
+                towerRotation.x = -90;
+                newTower.transform.localEulerAngles = towerRotation;
+
+                newTower.transform.localScale = new Vector3(40, 40, 40);
+
                 Tower newTow = newTower.GetComponent<Tower>();
                 towerList.Add(newTow);
                 worldSpacePointer.gameObject.SetActive(false);
