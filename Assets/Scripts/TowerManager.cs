@@ -52,14 +52,20 @@ namespace TowerDefence.Managers
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
                 groundLayerMask = 1 << 8;
+                int UILayerMask = 1 << 5;
+                int groundAndUILayerMask = groundLayerMask | UILayerMask;
 
                 RaycastHit hit;
 
-                if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity, groundLayerMask))
+                if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity, groundAndUILayerMask))
                 {
+                    //if hit UIlayer(layer 5) dont set variables below
+                    if (hit.collider.gameObject.layer == 5)
+                    {
+                        return;
+                    }
                     //Vector3 newTowerPosition = hit.point;
                     //towerPlacement = newTowerPosition;
-
                     worldSpacePointer.position = hit.point;
                     towerPlacement = worldSpacePointer.position;
                     worldSpacePointer.gameObject.SetActive(true);
@@ -80,10 +86,10 @@ namespace TowerDefence.Managers
 
         private void OnGUI()
         {
-            if (GUI.Button(new Rect(0, 0, 200, 40), towerPlacement.ToString()))
-            {
-                PurchaseTower();
-            }
+            //if (GUI.Button(new Rect(0, 0, 200, 40), towerPlacement.ToString()))
+            //{
+            //    PurchaseTower();
+            //}
         }
     }
 }

@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 48772246}
   - component: {fileID: 48772248}
   - component: {fileID: 48772247}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -497,7 +497,7 @@ GameObject:
   - component: {fileID: 702438248}
   - component: {fileID: 702438247}
   - component: {fileID: 702438246}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -792,7 +792,7 @@ GameObject:
   - component: {fileID: 1055705867}
   - component: {fileID: 1055705869}
   - component: {fileID: 1055705868}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: EventSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -859,7 +859,7 @@ GameObject:
   - component: {fileID: 1180960377}
   - component: {fileID: 1180960376}
   - component: {fileID: 1180960375}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Close
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1033,7 +1033,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1536098092}
   - component: {fileID: 1536098093}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Slots
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1097,7 +1097,7 @@ GameObject:
   - component: {fileID: 1536932185}
   - component: {fileID: 1536932187}
   - component: {fileID: 1536932186}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1170,7 +1170,7 @@ GameObject:
   - component: {fileID: 1653801028}
   - component: {fileID: 1653801030}
   - component: {fileID: 1653801029}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1245,7 +1245,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1902771846}
-  m_Layer: 0
+  - component: {fileID: 1902771847}
+  - component: {fileID: 1902771848}
+  m_Layer: 5
   m_Name: World Space pointer menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1268,6 +1270,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1902771847
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1902771845}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.59, y: 2.51, z: 0.05}
+  m_Center: {x: 0, y: 1.34, z: 0}
+--- !u!114 &1902771848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1902771845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a1096ccdcf64fb4e8706693d199392a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camPosition: {fileID: 963194228}
 --- !u!1 &2131732939
 GameObject:
   m_ObjectHideFlags: 0
@@ -1280,7 +1308,7 @@ GameObject:
   - component: {fileID: 2131732943}
   - component: {fileID: 2131732942}
   - component: {fileID: 2131732941}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Tower 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
