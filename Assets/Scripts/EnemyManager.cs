@@ -102,7 +102,7 @@ public class EnemyManager : MonoBehaviour
             Vector3 newSpawnLocation = SpawnLocation(xPos, zPos);
 
             //GameObject newEnemy = Instantiate(enemy, new Vector3(xPos, 0, zPos), Quaternion.identity);
-            GameObject newEnemy = Instantiate(enemy, newSpawnLocation, Quaternion.identity);
+            GameObject newEnemy = Instantiate(enemy, newSpawnLocation, Quaternion.identity, transform);
             Enemy enemyRef = newEnemy.GetComponent<Enemy>();
             //newEnemy.GetComponent<Enemy>().enemy = enemy;
             enemies.Add(enemyRef);

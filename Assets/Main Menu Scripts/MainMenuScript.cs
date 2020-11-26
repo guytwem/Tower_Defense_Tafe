@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MainMenuScript : MonoBehaviour
 {
@@ -121,6 +122,11 @@ public class MainMenuScript : MonoBehaviour
         }
     }
     #endregion
+
+    public void StartGame()
+    {
+        SceneManager.LoadScene("GameScene");
+    }
 
     /// <summary>
     /// find all of the resolutions for the current screen

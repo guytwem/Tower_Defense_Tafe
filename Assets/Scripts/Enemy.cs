@@ -98,6 +98,8 @@ public class Enemy : MonoBehaviour
     private void Die()//Tower _tower)
     {
         player.AddMoney(money);//on death add money to player
+        EnemyManager.instance.enemies.Remove(gameObject.GetComponent<Enemy>());
+        Destroy(gameObject);
     }
 
    
