@@ -4105,7 +4105,7 @@ MonoBehaviour:
   healthText: {fileID: 2125393767}
   moneyText: {fileID: 141259985}
   health: 100
-  money: 100
+  money: 45
   gameIsOver: 0
 --- !u!65 &1565646437
 BoxCollider:
