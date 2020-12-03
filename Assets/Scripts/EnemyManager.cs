@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class EnemyManager : MonoBehaviour
@@ -13,7 +14,8 @@ public class EnemyManager : MonoBehaviour
 
     public Enemy enemyScript;
 
-   
+    public Text nextWaveInText;
+    public Text currentWaveText;
 
     #region Private Wave Variables
 
@@ -23,15 +25,15 @@ public class EnemyManager : MonoBehaviour
     [SerializeField, Tooltip("Amount of time before next wave")]
     private float endWaveWaitTime = 20f;
     [SerializeField, Tooltip("What wave it is")]
-    private int waveIndex = 0;
+    private int waveIndex = 1;
     [SerializeField, Tooltip("Amount of enemies in the first wave")]
     private int wave1 = 5;
     
-
     public float xPos; // the boundaries for where enemies can spawn
     public float zPos;
     public int enemyCount; // how many enemies will spawn
     
+    private float waveStartWaitTime = 10f;
 
     #endregion
 
@@ -61,19 +63,17 @@ public class EnemyManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
 
     void Start()
     {
         StartCoroutine(EnemyDrop());
-        
-
     }
 
     private void Update()
     {
-
+        currentWaveText.text = "Current Wave: " + waveIndex.ToString();
     }
 
     public Enemy[] EnemiesInRange(Transform target, float maxRange, float minRange = 0)
@@ -94,8 +94,13 @@ public class EnemyManager : MonoBehaviour
 
     IEnumerator EnemyDrop() // spawns enemies up to ten in a random area
     {
-        while(enemyCount < 10)
+        do
         {
+            if (enemyCount == 0)
+            {
+                yield return StartCoroutine(WaitAndPrintSeconds());
+            }
+
             //xPos = Random.Range(-21, 14);
             //zPos = Random.Range(-11, 13);
 
@@ -103,13 +108,54 @@ public class EnemyManager : MonoBehaviour
 
             //GameObject newEnemy = Instantiate(enemy, new Vector3(xPos, 0, zPos), Quaternion.identity);
             GameObject newEnemy = Instantiate(enemy, newSpawnLocation, Quaternion.identity, transform);
+            // add if enough time a look at player base logic------------------------------------------------------------------
+
             Enemy enemyRef = newEnemy.GetComponent<Enemy>();
-            //newEnemy.GetComponent<Enemy>().enemy = enemy;
+            // add health to enemy every round / wave
+            enemyRef.enemyHealth += 1 * waveIndex;
             enemies.Add(enemyRef);
-            //Debug.Log(enemies.Count);
-            yield return new WaitForSeconds(5f);
-            enemyCount += 1;
+            enemyCount++;
+
+            if (enemyCount == EnemySpawnAmount)
+            {
+                while (enemyCount == EnemySpawnAmount)
+                {
+                    if (enemies.Count == 0)
+                    {
+                        enemyCount = 0;
+                        waveIndex++;
+                    }
+                    yield return null;
+                }
+            }
+            else
+            {
+                yield return new WaitForSeconds(1f);
+            }
+
+        } while (enemyCount < EnemySpawnAmount);
+
+        //// first wait 10 sec
+        //// start spawning enemies 
+        //// once EnemySpawnAmount > enemyCount then 
+        // increment the wave index 
+        // and restart 10 second timer
+        // start spawning enemies, this time with more enemies
+
+    }
+
+    IEnumerator WaitAndPrintSeconds()
+    {
+        nextWaveInText.gameObject.SetActive(true);
+        while (waveStartWaitTime > 0)
+        {
+            waveStartWaitTime -= Time.deltaTime;
+            nextWaveInText.text = "Next Wave in: " + waveStartWaitTime.ToString("F0");
+
+            yield return null;
         }
+        waveStartWaitTime = 10f;
+        nextWaveInText.gameObject.SetActive(false);
     }
 
     /// <summary>

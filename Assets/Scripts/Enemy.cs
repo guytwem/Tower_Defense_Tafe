@@ -12,17 +12,16 @@ public class Enemy : MonoBehaviour
     [SerializeField, Tooltip("how fast the enemy will move")]
     private float speed = 1;
     [SerializeField, Tooltip("How much the damage the enemy can take before dying")]
-    private float health = 1;
+    public float enemyHealth = 1;
     [SerializeField, Tooltip("How much damage the enemy will do to the players health")]
     private float damage = 1;
     [SerializeField, Tooltip("Distance before the enemy starts attacking")]
     private float minAttackDistance = 0.2f;
 
-    public GameObject enemy;
-
     [Header("Rewards")]
     [SerializeField]
     private int money = 1;
+
 
     private Player player; //reference to player script
 
@@ -88,8 +87,8 @@ public class Enemy : MonoBehaviour
     public void Damage(float damage)
     {
         //loses health based on tower damage
-        health -= damage;
-        if (health <= 0)//if health reaches 0 then the enemy dies
+        enemyHealth -= damage;
+        if (enemyHealth <= 0)//if health reaches 0 then the enemy dies
         {
             Die();
         }

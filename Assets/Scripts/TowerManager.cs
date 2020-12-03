@@ -13,7 +13,8 @@ namespace TowerDefence.Managers
         public GameObject towerPrefab;
         [SerializeField] private Transform worldSpacePointer;
 
-        private int cost = 1;
+        [SerializeField]
+        private int cost = 25;
         private int groundLayerMask;
 
         public List<Tower> towerList = new List<Tower>();
@@ -32,7 +33,7 @@ namespace TowerDefence.Managers
                 Destroy(gameObject);
                 return;
             }
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
         }
 
         private void Start()
@@ -42,7 +43,10 @@ namespace TowerDefence.Managers
 
         private void Update()
         {
-            FindNewTowerSpawn();
+            if (!(Player.instance.gameIsOver))
+            {
+                FindNewTowerSpawn();
+            }
         }
 
         private void FindNewTowerSpawn()
@@ -88,6 +92,9 @@ namespace TowerDefence.Managers
                 Tower newTow = newTower.GetComponent<Tower>();
                 towerList.Add(newTow);
                 worldSpacePointer.gameObject.SetActive(false);
+
+                player.money -= cost;
+
             }
         }
 
